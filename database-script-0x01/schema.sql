@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS User (
 
 CREATE TABLE IF NOT EXISTS Property (
     property_id VARCHAR(50) PRIMARY KEY,
-    host_id VARCHAR(50) NOT NULL,
+    host_id VARCHAR(50) NULL,
     name VARCHAR(255) NOT NULL,
     `description` TEXT NOT NULL,
     `location` VARCHAR(255) NOT NULL,
@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS Property (
 
 CREATE TABLE IF NOT EXISTS Booking (
     booking_id VARCHAR(50) PRIMARY KEY,
-    property_id VARCHAR(50) NOT NULL,
-    user_id VARCHAR(50) NOT NULL,
+    property_id VARCHAR(50) NULL,
+    user_id VARCHAR(50) NULL,
     `start_date` DATE NOT NULL,
     end_date DATE NOT NULL,
     total_price DECIMAL(10, 2) NOT NULL,
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS Booking (
 
 CREATE TABLE IF NOT EXISTS Payment (
     payment_id VARCHAR(50) PRIMARY KEY,
-    booking_id VARCHAR(50) NOT NULL,
+    booking_id VARCHAR(50) NULL,
     amount DECIMAL(10, 2) NOT NULL,
     payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     payment_method VARCHAR(20) CHECK (payment_method IN ('credit_card', 'paypal', 'bank_transfer')) NOT NULL,
@@ -59,6 +59,6 @@ CREATE TABLE IF NOT EXISTS Message (
     recipient_id VARCHAR(50) NOT NULL,
     content TEXT NOT NULL,
     sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (sender_id) REFERENCES User(user_id) ON DELETE SET NULL,
-    FOREIGN KEY (recipient_id) REFERENCES User(user_id) ON DELETE SET NULL
+    FOREIGN KEY (sender_id) REFERENCES User(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (recipient_id) REFERENCES User(user_id) ON DELETE CASCADE
 );
