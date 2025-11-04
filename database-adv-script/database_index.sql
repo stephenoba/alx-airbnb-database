@@ -24,3 +24,11 @@ CREATE INDEX idx_property_location ON Property (location);
 
 -- Index for price-based queries (filtering or sorting)
 CREATE INDEX idx_property_price ON Property (price_per_night);
+
+EXPLAIN ANALYZE
+SELECT *
+FROM Booking b
+JOIN User u ON b.user_id = u.user_id
+WHERE u.email = 'alicejohnson@gmail.com'
+  AND b.status = 'confirmed'
+ORDER BY b.start_date DESC;
